@@ -10,12 +10,13 @@ function [THETA,k] = gradient_descent(THETA,lambdas,L,P,my, tol, max_iter)
 %theta - Column vector of the angle between the length segments
 %n - Number of iterations
 %% Case 2 - point within reach
+max_iter = 1000;
 [n,s] = size(THETA);
 %theta = ones(length(n*s),1).*pi/2;
 %Dette er de to funksjonene
 %lag(THETA,l,L,P)
 dd = dLag(THETA,lambdas,L,P,my);
-alpha0 = 1;
+alpha0 = s*pi;
 rho = 1/2;
 c = 1/4;
 k = 0;
