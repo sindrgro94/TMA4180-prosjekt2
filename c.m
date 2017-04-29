@@ -1,5 +1,5 @@
 function [c_x,c_y] = c(j,THETA,L, P)
-    F = robot_arm2(THETA(:,j),L(:,j));
+    F = robot_arm2(THETA(:,j),L);
     c_x = F(1)-P(1,j);
     c_y = F(2)-P(2,j);
 end
