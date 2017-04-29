@@ -1,4 +1,4 @@
-function [THETA,k] = gradient_descent(THETA,lambdas,L,P,my, tol, max_iter)
+function [theta,k] = gradient_descent(THETA,lambdas,L,P, tol, max_iter)
 %% Preconditions 
 %p - point desired
 %L - Column vector of length segments
@@ -14,21 +14,25 @@ function [THETA,k] = gradient_descent(THETA,lambdas,L,P,my, tol, max_iter)
 %theta = ones(length(n*s),1).*pi/2;
 %Dette er de to funksjonene
 %lag(THETA,l,L,P)
-dd = dLag(THETA,lambdas,L,P,my);
+dd = dLag(THETA,lambdas,L,P);
 alpha0 = 1;
 rho = 1/2;
 c = 1/4;
 k = 0;
 while norm(dd) > tol && k<=max_iter
-    k = k+1;
     pk = -dd; %Gradient descent
     alpha = alpha0;
     c_dd_dot_pk = c*dot(dd,pk);
     pk = reshape(pk,n,s);
-    while lag(THETA+alpha*pk,lambdas,L,P,my) > lag(THETA,lambdas,L,P,my)+alpha*c_dd_dot_pk %Armijo condition
+    while lag(THETA+alpha*pk,lambdas,L,P) > lag(THETA,lambdas,L,P)+alpha*c_dd_dot_pk %Armijo condition
         alpha = rho*alpha;
     end
     THETA = THETA + alpha * pk;
-    dd = dLag(THETA,lambdas,L,P,my);
+    dd = dLag(THETA,lambdas,L,P);
+end
+toc
+%% For the numerical experiment
+if max_iter>=1000
+    robot_arm(theta,L,p);
 end
 end

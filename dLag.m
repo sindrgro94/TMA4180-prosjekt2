@@ -1,7 +1,6 @@
-function svar = dLag(THETA,l,L,P)
+function svar = dLag(THETA,l,L,P,my)
 [~,s] = size(THETA);
 svar = gradE(THETA);
-my = 1;
 for j = 1:s
     [c_x,c_y] = c(j,THETA,L, P);
     [dc_x,dc_y] = gradC(j,THETA,L, P);
