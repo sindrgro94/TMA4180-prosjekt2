@@ -1,4 +1,5 @@
 function svar = E(THETA)
+%Gir E(THETA) fra oppgaven
 [n,s] = size(THETA);
 svar = 0;
 for i = 1:n

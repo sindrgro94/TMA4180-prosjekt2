@@ -1,7 +1,7 @@
-function [c_x,c_y] = c(i,THETA,L, P)
-    F = robot_arm2(THETA(:,i),L(:,i));
-    c_x = F(1)-P(1,i);
-    c_y = F(2)-P(2,i);
+function [c_x,c_y] = c(j,THETA,L, P)
+    F = robot_arm2(THETA(:,j),L(:,j));
+    c_x = F(1)-P(1,j);
+    c_y = F(2)-P(2,j);
 end
 function final_pos = robot_arm2(theta,L)
 % Kan sende in theta = [30,30,30] og L = [1,1,1]

@@ -1,10 +1,18 @@
 function [vec_C_x,vec_C_y] = gradC(j,THETA,L, P)
+%Her er mye gjenbrukt fra forrige prosjekt. Forskjellen er at det er flere
+%variable i E(THETA) enn i F(THETA) så gradienten får flere nuller. Det er
+%forresten verdt å merke seg at disse m være uavhengige ettersom at alle C_i
+%har verdier der C_j (j~=i) er null. Jeg kan også påstå at C_ix og C_iy er
+%uavhengige ettersom at cos og sin aldri kan bli null så lenge alle theta
+%ikke er lik pi/4+k*2*pi
+
 [n,s] = size(THETA);
 vec_C_x = zeros(n*s,1);
 vec_C_y = zeros(n*s,1);
+
 thetasum = cumsum(THETA(:,j));
-L_cos_theta = L(:,j).*cos(thetasum);
-L_sin_theta = L(:,j).*sin(thetasum);
+L_cos_theta = L.*cos(thetasum);
+L_sin_theta = L.*sin(thetasum);
 pos_arm = [sum(L_cos_theta),sum(L_sin_theta)];
 
 X = flip(L_sin_theta);
@@ -18,6 +26,6 @@ temp_x = flip(X.*(pos_arm(1)-P(1,j)));
 temp_y = flip(Y.*(pos_arm(2)-P(2,j)));
 
 vec_C_x(n*(j-1)+1:n*j) = temp_x;
-vec_C_x(n*(j-1)+1:n*j) = temp_y;
+vec_C_y(n*(j-1)+1:n*j) = temp_y;
 
 end

@@ -1,4 +1,4 @@
-function [theta,n] = robot_gradeint_descent(THETA,L,P, tol, max_iter)
+function [theta,n] = gradient_descent(THETA,L,P, tol, max_iter)
 %% Preconditions 
 %p - point desired
 %L - Column vector of length segments
