@@ -1,6 +1,5 @@
 function [THETA,k,flag] = gradient_descent_Q(THETA,L,P,my, tol)
 max_iter = 1000;
-flag = false;
 [n,s] = size(THETA);
 %Dette er de to funksjonene
 %lag(THETA,l,L,P)
@@ -21,7 +20,7 @@ while norm(dd) > tol && k<=max_iter
         cnt = cnt+1;
     end
     if alpha < 10^-12
-        flag = true;
+        flag
         break;
     end
     THETA = THETA + alpha * pk;
