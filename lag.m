@@ -3,10 +3,10 @@ function svar = lag(THETA,lambdas,L,P,my)
 %Sum c and l
 [~,s] = size(THETA);
 svar = E(THETA);
+summen = 0;
 for j = 1:s
     [c_x,c_y] = c(j,THETA,L, P);
-    svar = svar - lambdas(j,1)*c_x + my/2 * c_x^2; % s constraints on x
-    svar = svar - lambdas(j,2)*c_y + my/2 * c_y^2; % s constraints on y
+    summen = summen + ( - lambdas(1,j)*c_x - lambdas(2,j)*c_y + my/2*c_x^2 + my/2*c_y^2);
 end
-
+svar = svar + summen;
 end

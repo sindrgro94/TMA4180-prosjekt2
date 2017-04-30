@@ -5,6 +5,7 @@ my = 1;
 [~,s] = size(THETA);
 lambdas = ones(s,2);
 k = 0;
+x = 0;
 while norm(dLag(THETA,lambdas,L,P,my)) > TOL && max_iter > k
     k = k+1;
     [THETA,rounds] = gradient_descent(THETA,lambdas,L,P,my, tol, max_iter);
@@ -14,9 +15,11 @@ while norm(dLag(THETA,lambdas,L,P,my)) > TOL && max_iter > k
         lambdas(j,1) = lambdas(j,1)-my*c_x;
         lambdas(j,2) = lambdas(j,2)-my*c_y;
     end
-    my = max(max(abs(lambdas)));
-    tol = tol/2;
-    norm(dLag(THETA,lambdas,L,P,my))
+    my = max(max(abs(lambdas)))*1.5
+    
+    dd = norm(dLag(THETA,lambdas,L,P,my))
+    tol = dd/2;
+    x(k) = dd;
 end
 svar = THETA;
 end
