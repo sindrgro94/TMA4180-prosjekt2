@@ -10,12 +10,16 @@ figure
 xlim([-r,r]);
 ylim([-r,r]); 
 [joints,points] = size(theta);
-steps = 100;
-q = zeros(points-1,joints,2,steps);
+steps = 20;
+q = zeros(points,joints,2,steps);
 THETA = zeros(joints,steps);
-for point = 1:points-1
+for point = 1:points
     for joint = 1:joints
-        THETA(joint,:) = linspace(theta(joint,point),theta(joint,point+1),steps);
+        if point<points
+            THETA(joint,:) = linspace(theta(joint,point),theta(joint,point+1),steps);
+        else 
+            THETA(joint,:) = linspace(theta(joint,point),theta(joint,1),steps);
+        end
     end
     THETA = cumsum(THETA);
     for step = 1:steps
@@ -24,7 +28,7 @@ for point = 1:points-1
         end
     end
 end
-for point = 1:points-1
+for point = 1:points
     for step = 1:steps
         plot(squeeze(q(point,:,1,step)),squeeze(q(point,:,2,step)),'-or')
         hold on
