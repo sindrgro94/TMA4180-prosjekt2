@@ -13,4 +13,4 @@ L = [1;2;1];
 tol = 0.1;
 max_iter = 1000;
 svar = Augmentet_Lagrangian(THETA,L,P,tol,max_iter);
-plotHandMovement(THETA,L,P)
+plotHandMovement(svar,L,P)
