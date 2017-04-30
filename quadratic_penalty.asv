@@ -3,9 +3,9 @@ my = 1;
 k = 0;
 while norm(dQ(THETA,L,P,my)) > 0.01 && max_iter > k
     THETA = gradient_descent_Q(THETA,L,P,my,0.1);
-    my = my*1.5;
+    my = my*2;
     k = k+1;
-    dd = norm(dQ(THETA,L,P,my))
+    dd = norm(dQ
 end
 
 end
