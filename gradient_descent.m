@@ -1,4 +1,4 @@
-function [THETA,k] = gradient_descent(THETA,lambdas,L,P,my, tol, max_iter)
+function [THETA,k] = gradient_descent(THETA,lambdas,L,P,my, tol)
 %% Preconditions 
 %p - point desired
 %L - Column vector of length segments
@@ -14,8 +14,8 @@ max_iter = 1000;
 [n,s] = size(THETA);
 %Dette er de to funksjonene
 %lag(THETA,l,L,P)
-dd = dLag(THETA,lambdas,L,P,my);
-alpha0 = 2*s*pi;
+dd = gradLag(THETA,lambdas,L,P,my);
+alpha0 = 1;
 rho = 1/2;
 c = 10^-4;
 k = 0;
@@ -31,9 +31,10 @@ while norm(dd) > tol && k<=max_iter
         cnt = cnt+1;
     end
     if alpha < 10^-12
+        fprintf('måtte bryte\n')
         break;
     end
     THETA = THETA + alpha * pk;
-    dd = dLag(THETA,lambdas,L,P,my);
+    dd = gradLag(THETA,lambdas,L,P,my);
 end
 end
