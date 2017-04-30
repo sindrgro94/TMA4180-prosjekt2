@@ -15,10 +15,11 @@ while norm(dLag(THETA,lambdas,L,P,my)) > TOL && max_iter > k
         lambdas(j,1) = lambdas(j,1)-my*c_x;
         lambdas(j,2) = lambdas(j,2)-my*c_y;
     end
-    my = max(max(abs(lambdas)))*1.5
-    
+%     my = max(max(abs(lambdas)))*1.5;
+    my = my*1.5;
     dd = norm(dLag(THETA,lambdas,L,P,my))
-    tol = dd/2;
+    
+    %tol = dd/2;
     x(k) = dd;
 end
 svar = THETA;
