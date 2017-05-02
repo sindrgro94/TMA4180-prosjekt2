@@ -1,4 +1,4 @@
-function configSpaceGeneral(L,c)
+function points = configSpaceGeneral(L,c,plotOrNot)
 % This function plots the set of all reachable points for a robot with
 % segments lengths L = [l1,l2,....,ln] and with angles -c to c.
 % For robot arms with 4 arms the function uses approximately 1 minute.
@@ -39,9 +39,11 @@ while notFinished
     end
 end
 toc
-plot(points(1,:),points(2,:),'b*')
-hold on
-plot(0,0,'r*')
-axis([min(points(1,:))-1,max(points(1,:))+1,min(points(2,:))-1,max(points(2,:))+1])
-title('The set of all reachable points')
+if plotOrNot
+    plot(points(1,:),points(2,:),'b*')
+    hold on
+    plot(0,0,'r*')
+    axis([min(points(1,:))-1,max(points(1,:))+1,min(points(2,:))-1,max(points(2,:))+1])
+    title('The set of all reachable points')
+end
 end
