@@ -41,8 +41,8 @@ for point = 1:points
     beta = 1;
     while norm(derivativeP(THETA(:,point),beta,L,p(:,point),angle)) > TOL && max_iter > k
         k = k+1;
-        [THETA(:,point)] = quasiNewton(THETA(:,point),L,p(:,point), beta, angle, TOL);
-        beta = beta/5;
+        [THETA(:,point)] = quasiNewton(THETA(:,point),L,p(:,point), beta, angle, TOL/10);
+        beta = beta/10;
     end
 end
 end
@@ -71,8 +71,10 @@ while norm(dd) > tol && k<=max_iter
     pk = -H*dd;
     %finding step length
     [vec_u,vec_l] = constraints(THETA, angle);
-    while fx(THETA+alpha*reshape(pk,n,s),L,p,beta,vec_u,vec_l) > fx(THETA,L,p,beta,vec_u,vec_l)+alpha*c1*dot(-pk,pk) %Armijo condition
+    [vec_u_pk,vec_l_pk] = constraints(THETA+alpha*pk, angle);
+    while fx(THETA+alpha*reshape(pk,n,s),L,p,beta,vec_u_pk,vec_l_pk) > fx(THETA,L,p,beta,vec_u,vec_l)+alpha*c1*dot(-pk,pk) %Armijo condition
         alpha = rho*alpha;
+        [vec_u_pk,vec_l_pk] = constraints(THETA+alpha*pk, angle);
     end
     %Updating x
     %Updating H
@@ -82,7 +84,7 @@ while norm(dd) > tol && k<=max_iter
     sk = alpha*pk;
     pk = reshape(pk,n,s);
     THETA = THETA + alpha*pk;
-    yk = (derivativeP(THETA+alpha*pk,beta,L,p, angle)-dd);
+    yk = (derivativeP(THETA,beta,L,p, angle)-dd);
     rok = 1/dot(yk,sk);
     zk = (H*yk);
     H = H - rok*(sk*zk' + zk*sk') + (rok^2*dot(yk,zk)+rok)*(sk*sk');
