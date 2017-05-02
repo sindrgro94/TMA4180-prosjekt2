@@ -1,7 +1,7 @@
 function svar = Augmentet_Lagrangian(THETA,L,P,max_iter)
 %Framework 17.3
 %%Tester om noen punkter er utenfor
-if is_Outside(L,P) == true
+if is_outside(L,P) == true
     fprintf('At least one of the points are outside, no solution exist.\n');
     return
 end
@@ -23,7 +23,7 @@ while norm(dLag(THETA,lambdas,L,P,my)) > TOL && max_iter > k
     
 end
 svar = THETA;
-plotHandMovement(THETA,L,P)
+% plotHandMovement(THETA,L,P)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
