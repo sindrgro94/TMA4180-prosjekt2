@@ -1,29 +1,26 @@
-function svar = Augmentet_Lagrangian(THETA,L,P,max_iter)
+function svar = barrier_method(THETA,L,P,angle,max_iter)
 %Framework 17.3
 %%Tester om noen punkter er utenfor
-if is_outside(L,P) == true
-    fprintf('At least one of the points are outside, no solution exist.\n');
-    return
-end
-
 %%Initialiserer 
 TOL = 0.01;
 my = 1;
+beta = 1;
 [~,s] = size(THETA);
 lambdas = ones(s,2);
 [~,tol] = update_lambdas_tol(THETA,lambdas,L,P,my);
 k = 0;
 %%Augmentet Lagrangian
-while norm(dLag(THETA,lambdas,L,P,my)) > TOL && max_iter > k
+while norm(bar_dLag(THETA,lambdas,L,P,my,beta, angle)) > TOL && max_iter > k
     k = k+1;
-    [THETA] = quasi_Newton(THETA,lambdas,L,P,my, tol);
+    THETA = Augmentet_Lagrangian(THETA,L,P,max_iter);
+    [THETA] = bar_quasi_Newton(THETA,lambdas,L,P,my, beta, angle, tol);
     [lambdas,tol] = update_lambdas_tol(THETA,lambdas,L,P,my);
-    my = my*2;
-    dd = norm(dLag(THETA,lambdas,L,P,my));
+    beta = beta/1.5;
+    dd = norm(bar_dLag(THETA,lambdas,L,P,my,beta, angle))
     
 end
 svar = THETA;
-% plotHandMovement(THETA,L,P)
+plotHandMovement(THETA,L,P)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
