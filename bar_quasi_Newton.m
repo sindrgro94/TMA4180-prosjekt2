@@ -26,6 +26,9 @@ while norm(dd) > tol && k<=max_iter
     end
     %Updating x
     %Updating H
+    if alpha < 10^-12
+        break;
+    end
     sk = alpha*pk;
     pk = reshape(pk,n,s);
     THETA = THETA + alpha*pk;

@@ -1,7 +1,7 @@
 function svar = bar_lag(THETA,lambdas,L,P,my,beta,angle)
 svar = lag(THETA,lambdas,L,P,my);
 [vec_u,vec_l] = constraints(THETA, angle);
-svar = svar - beta*sum(log());
+svar = svar - beta*sum(log([vec_u;vec_l]));
 end
 
 

@@ -3,7 +3,7 @@ function svar = barrier_method(THETA,L,P,angle,max_iter)
 %%Tester om noen punkter er utenfor
 %%Initialiserer 
 TOL = 0.01;
-my = 1;
+my = 0.1;
 beta = 1;
 [~,s] = size(THETA);
 lambdas = ones(s,2);
@@ -12,10 +12,12 @@ k = 0;
 %%Augmentet Lagrangian
 while norm(bar_dLag(THETA,lambdas,L,P,my,beta, angle)) > TOL && max_iter > k
     k = k+1;
-    THETA = Augmentet_Lagrangian(THETA,L,P,max_iter);
+    %THETA = Augmentet_Lagrangian(THETA,L,P,max_iter);
     [THETA] = bar_quasi_Newton(THETA,lambdas,L,P,my, beta, angle, tol);
     [lambdas,tol] = update_lambdas_tol(THETA,lambdas,L,P,my);
-    beta = beta/1.5;
+    beta = beta/5;
+    my = my*1.5;
+    %my = my*2;
     dd = norm(bar_dLag(THETA,lambdas,L,P,my,beta, angle))
     
 end
