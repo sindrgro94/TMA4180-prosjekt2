@@ -18,6 +18,8 @@ P = [5,4,6,4;0,2,0.5,-2];
 P_angle = [-1,-3,-3,0,5;5,3,-4,5,2];
 THETA = ones(length(L),length(P));
 max_iter = 1000;
-svar = Augmentet_Lagrangian(THETA,L,P,max_iter);
-% plotHandMovement(svar,L,P)
-makeRobotPlot(svar,L,P);
+angle = pi/2;
+%svar = Augmentet_Lagrangian(THETA,L,P,max_iter);
+svar = BC_Augmented_Lagrangian(THETA,L,P,angle,max_iter);
+plotHandMovement(svar,L,P)
+% makeRobotPlot(svar,L,P);
