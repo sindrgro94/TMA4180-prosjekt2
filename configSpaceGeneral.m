@@ -9,13 +9,13 @@ angles=linspace(-c,c,50);
 n=length(angles);
 arms = length(L);
 if arms>3
-    l = 1;
-    k = 1;
+    l = 4;
+    k = 2;
 else
     l = 1;
     k = 1;
 end
-points=zeros(2,n^arms/(l*k);
+points=zeros(2,n^arms/(l*k));
 numPoints = length(points);
 theta = ones(1,arms);
 theta=theta*(-c);
@@ -31,7 +31,7 @@ while notFinished
         percentFinished = percentFinished + 0.05;
     end
     if joint==arms
-        for i=1:n
+        for i=1:l:n
             THETA = cumsum(theta);
             x = dot(L,cos(THETA));
             y = dot(L,sin(THETA));
