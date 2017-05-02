@@ -11,11 +11,17 @@ vec_C_x = zeros(n*s,1);
 vec_C_y = zeros(n*s,1);
 
 thetasum = cumsum(THETA(:,j));
-L_cos_thetasum = L.*cos(thetasum);
-L_sin_thetasum = L.*sin(thetasum);
+L_cos_theta = L.*cos(thetasum);
+L_sin_theta = L.*sin(thetasum);
 
-vec_C_x(n*(j-1)+1:n*j) = flip(cumsum(-L_sin_thetasum));
-vec_C_y(n*(j-1)+1:n*j) = flip(cumsum(L_cos_thetasum));
+X = flip(L_sin_theta);
+X = -cumsum(X); %Flippes senere i dtheta
+
+Y = flip(L_cos_theta);
+Y = cumsum(Y); %Flippes senere i dtheta
+
+vec_C_x(n*(j-1)+1:n*j) = flip(X);
+vec_C_y(n*(j-1)+1:n*j) = flip(Y);
 
 
 end
