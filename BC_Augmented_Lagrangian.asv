@@ -5,8 +5,8 @@ eta_s = 0.01; w_s = 0.01;
 my = 1; w = 1/my; eta = 1/my^0.1;
 
 while stop_condition(THETA,lambdas,L,P,my,angle) > w_s;
-%     THETA = set_THETA(THETA,angle);
-    THETA = quasi_Newton(THETA,lambdas,L,P,my, 0.00001);
+    THETA = set_THETA(THETA,angle);
+    THETA = quasi_Newton(THETA,lambdas,L,P,my, 0.0001);
     if norm(c_vec(THETA,L,P)) <= eta
         if norm(c_vec(THETA,L,P)) <= eta_s && stop_condition(THETA,lambdas,L,P,my,angle) <= w_s
             break
