@@ -15,7 +15,7 @@ else
     l = 1;
     k = 1;
 end
-points=zeros(2,n^arms);
+points=zeros(2,n^arms/(l*k);
 numPoints = length(points);
 theta = ones(1,arms);
 theta=theta*(-c);
@@ -38,7 +38,7 @@ while notFinished
             count = count+1;
             points(1,count)=x;
             points(2,count)=y;
-            theta(arms) = theta(arms)+dtheta;
+            theta(arms) = theta(arms)+l*dtheta;
         end
         theta(arms) = -c;
         joint = joint-1;
