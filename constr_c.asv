@@ -1,8 +1,7 @@
 function c_vec = constr_c(THETA,angle)
 %Tar inn THETA og vinkelbegrensninger
 %Sender tilbake om constrintsene er brutt og med hvor mye i henhold til
-%Forelesningsnotatet.
-% Sender ut upper-constraintene også lower-constraints
+%side 
     lower = -angle;
     upper = angle;
     [n,s] = size(THETA);

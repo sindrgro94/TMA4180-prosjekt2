@@ -3,19 +3,17 @@ function THETA = BC_Augmented_Lagrangian(THETA,L,P,angle,max_iter)
 lambdas = ones(s,2);
 THETA = getInitialValues(THETA,L,P,angle);
 lambdas_constr = zeros(n*s,1);
-my = 1;
+my = 10;
 TOL = 0.01;
 [lambdas,lambdas_constr,tol] = update_lambdas_tol(THETA,lambdas,lambdas_constr,L,P,my, angle);
 k = 0;
 dd = norm(dLag(THETA,lambdas,L,P,my));
 while norm(dd) > TOL;
-    [THETA] = constr_quasi_Newton(THETA,lambdas,lambdas_constr,L,P,my, tol, angle);
-    tol_old = tol;
+    [THETA] = constr_quasi_Newton(THETA,lambdas,lambdas_constr,L,P,my, 0.01, angle);
     [lambdas,lambdas_constr,tol] = update_lambdas_tol(THETA,lambdas,lambdas_constr,L,P,my, angle);
-    if tol > tol_old
-        my = my*1.5;
-    end
+    
     k = k+1;
+    dd = norm(dLag(THETA,lambdas,L,P,my));
 end
 
 end

@@ -8,5 +8,5 @@ for j = 1:s
     svar = svar - ((lambdas(j,1)-my*c_x)*dc_x + (lambdas(j,2)-my*c_y)*dc_y);
 end
 %Inequality constraints
-svar = svar -(lambdas_constr-my*constr_c(THETA,angle)).*constr_gradC(THETA,angle);
+svar = svar -(lambdas_constr-my*constr_c(THETA,angle)).*constr_gradC(THETA);
 end
