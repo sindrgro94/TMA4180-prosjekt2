@@ -12,9 +12,9 @@ c1 = 10^-4;
 rho = 1/2;
 rok = 0;
 while norm(dd) > tol && k<=max_iter
-    if rok > 10^12
-        H = I;
-    end
+%     if rok > 10^12
+%         H = I;
+%     end
     alpha = 1;
     k = k+1;
     %Initial step length and direction
@@ -23,8 +23,8 @@ while norm(dd) > tol && k<=max_iter
     while constr_Lag(THETA+alpha*reshape(pk,n,s),lambdas,lambdas_constr,L,P,my,angle) > constr_Lag(THETA,lambdas,lambdas_constr,L,P,my,angle)+alpha*c1*dot(-pk,pk) %Armijo condition
         alpha = rho*alpha;
     end
-    if alpha < 10^-15
-        fprintf('Break\n')
+    if alpha < 10^-20
+%         fprintf('Break\n')
         break;
     end
     %Updating x
@@ -35,7 +35,7 @@ while norm(dd) > tol && k<=max_iter
     yk = (constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle)-dd);
     rok = 1/dot(yk,sk);
     zk = (H*yk);
-    H = H - rok*(sk*zk' + zk*sk') + (rok^2*dot(yk,zk)+rok)*(sk*sk');
+    H = H - (sk*zk' + zk*sk')/dot(yk,sk) + (dot(yk,zk)+rok)*(sk*sk')/(dot(yk,sk)^2);
     %Updating dd
     dd = constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle);
 end 
