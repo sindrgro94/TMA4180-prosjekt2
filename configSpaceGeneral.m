@@ -1,7 +1,6 @@
 function flag = configSpaceGeneral(L,c,p,plotOrNot,countdown)
 % This function plots the set of all reachable points for a robot with
 % segments lengths L = [l1,l2,....,ln] and with angles -c to c.
-% For robot arms with 4 arms the function uses approximately 1 minute.
 
 tol=0.1;
 [~,s]=size(p);
@@ -9,7 +8,7 @@ angles=linspace(-c,c,50);
 n=length(angles);
 arms = length(L);
 if arms>3
-    l = 4;
+    l = 2;
     k = 2;
 else
     l = 1;

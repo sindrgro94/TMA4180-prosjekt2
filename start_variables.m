@@ -14,9 +14,17 @@ close all
 clear all
 clc
 L = [3,2,2]';
-P = [5,4,6,4;0,2,0.5,-2];
-P_angle = [-1,-3,-3,0,5;5,3,-4,5,2];
+% P = [5,4,6,4;0,2,0.5,-2];
+P = [-1,-3,-3,0,5;5,3,-4,5,2];
 THETA = ones(length(L),length(P));
+[~,points] = size(P);
+for point = 1:points
+    if P(2,point)<0
+        THETA(:,point) = THETA(:,point)*(-0.1);
+    else
+        THETA(:,point) = THETA(:,point)*(0.1);
+    end
+end
 max_iter = 1000;
 angle = pi/2;
 %svar = Augmentet_Lagrangian(THETA,L,P,max_iter);
