@@ -7,7 +7,7 @@ if is_Outside(L,P) == true
 end
 
 %%Initialiserer 
-TOL = 0.01;
+TOL = 0.001;
 my = 1;
 [~,s] = size(THETA);
 lambdas = ones(s,2);
