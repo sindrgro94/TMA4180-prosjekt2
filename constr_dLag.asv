@@ -12,5 +12,5 @@ end
 gradient = [grad_u;grad_l];
 temp = (lambdas_constr-my*constr_c(THETA,angle)).*gradient;
 svar = svar -(temp(1:n*s)+temp(n*s+1:2*n*s));
-% svar = svar -(gradienten til c_u + gradienten til c_l) sånn cirka.
+% svar = svar -(gradienten til c_u + gradienten til c_l)
 end
