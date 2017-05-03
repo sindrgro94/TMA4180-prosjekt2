@@ -3,7 +3,7 @@ tic
 max_iter = 1000;
 [n,s] = size(THETA);
 %Dette er de to funksjonene
-dd = constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle);
+dd = dd = norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle));
 %Initialiazing values
 I = eye(n*s)*0.001;
 H = I;
@@ -23,7 +23,7 @@ while norm(dd) > tol && k<=max_iter
     while constr_Lag(THETA+alpha*reshape(pk,n,s),lambdas,lambdas_constr,L,P,my,angle) > constr_Lag(THETA,lambdas,lambdas_constr,L,P,my,angle)+alpha*c1*dot(-pk,pk) %Armijo condition
         alpha = rho*alpha;
     end
-    if alpha < 10^-15
+    if alpha < 10^-12
         fprintf('Break\n')
         break;
     end
@@ -32,12 +32,12 @@ while norm(dd) > tol && k<=max_iter
     sk = alpha*pk;
     pk = reshape(pk,n,s);
     THETA = THETA + alpha*pk;
-    yk = (constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle)-dd);
+    yk = (dLag(THETA,lambdas,L,P,my)-dd);
     rok = 1/dot(yk,sk);
     zk = (H*yk);
     H = H - rok*(sk*zk' + zk*sk') + (rok^2*dot(yk,zk)+rok)*(sk*sk');
     %Updating dd
-    dd = constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle);
+    dd = dLag(THETA,lambdas,L,P,my);
 end 
 toc
 

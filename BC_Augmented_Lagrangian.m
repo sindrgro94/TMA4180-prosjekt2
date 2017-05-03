@@ -11,9 +11,9 @@ dd = norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle));
 while norm(dd) > TOL;
     [THETA] = constr_quasi_Newton(THETA,lambdas,lambdas_constr,L,P,my, tol, angle);
     [lambdas,lambdas_constr,tol] = update_lambdas_tol(THETA,lambdas,lambdas_constr,L,P,my, angle);
-    
+    my = 20;
     k = k+1;
-    dd = norm(dLag(THETA,lambdas,L,P,my));
+    dd = norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle));
 end
 
 end
