@@ -11,7 +11,7 @@ my = 10;
 if stepSelection
     TOL = 0.0005;
 else
-    TOL = 0.15;
+    TOL = 0.1;
 end
 [lambdas,lambdas_constr,tol] = update_lambdas_tol(THETA,lambdas,lambdas_constr,L,P,my, angle);
 k = 1;
@@ -70,7 +70,7 @@ for point = 1:points
         [THETA(:,point)] = quasiNewton(THETA(:,point),L,p(:,point), beta, angle, TOL/10);
         beta = beta/10;
     end
-    if(fx(THETA(:,point),L,p(:,point))>10^-2)
+    if(fx(THETA(:,point),L,p(:,point))>0.1)
         THETA = 0;
     return
     end
