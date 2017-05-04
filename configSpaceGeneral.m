@@ -71,7 +71,7 @@ end
 
 if max(dist2)>tol
     flag=false;
-    fprintf('Error, a point is outside of the configuration space.\n');
+    fprintf('Error, at least one point is outside of the configuration space.\n');
 else
     flag=true;
 end
