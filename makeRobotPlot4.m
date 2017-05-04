@@ -1,4 +1,4 @@
-function makeRobotPlot(theta,L,p)
+function makeRobotPlot4(theta,L,p)
 if length(p) ~=4
     disp('Works only with four points')
     return

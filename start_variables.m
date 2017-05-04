@@ -29,5 +29,6 @@ max_iter = 1000;
 angle = pi/2;
 %svar = Augmentet_Lagrangian(THETA,L,P,max_iter);
 svar = BC_Augmented_Lagrangian(THETA,L,P,angle,max_iter);
-plotHandMovement(svar,L,P)
-% makeRobotPlot(svar,L,P);
+% plotHandMovement(svar,L,P)
+%makeRobotPlot4(svar,L,P);
+makeRobotPlot5(svar,L,P);

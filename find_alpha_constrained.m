@@ -27,8 +27,8 @@ while ~(wolfe1(pk, theta,lambdas,lambdas_constr,L,P,my,angle,alpha,c1) && wolfe2
         al = alpha;
     end
     alpha = (ar+al)/2;
-    if alpha < 10^-20 || (ar<al+10^-7 && ar>al-10^-7)
-        fprintf('Something wrong happened. Alpha = %f\n',alpha);
+    if alpha < 10^-20 || (ar<al+10^-13 && ar>al-10^-13)
+        fprintf('Could not find an alpha to make both wolfe conditions satisfied. Alpha ended at = %f\n',alpha);
         alpha = false;
         break;
     end
