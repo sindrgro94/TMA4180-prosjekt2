@@ -1,4 +1,4 @@
-function bool = is_Outside(L,P)
+function bool = is_outside(L,P)
 R = sum(L);
 r = max(L) - (sum(L)-max(L));
 [~,s] = size(P);
