@@ -26,10 +26,17 @@ plotHandMovement(answer,L,P);
 %% Task2 Augmented lagrangian for both equality and inequality
 % To make the method terminate and don't use too long time, the tolerance for the 2-norm of the gradient
 % to the lagrangian is set to 0.15 and stepSelection is false meaning we use
-% only backtracking. If stepSelection is set to true, the method uses
-% find_alpha_constrained.m wich should choose better stepsizes but after
-% some iterations it will manage to find a stepsize to make both
-% wolfe-conditions satisfied.
+% only backtracking. When we do this we can not guarantee H to be pos.def so we reset H to be the identity matrix 
+% at each step. Then the method is technically gardient descent.
+% If stepSelection is true we use find_alpha_constrained.m to find stepsizes,
+% wich choose stepsizes based on wolfe conditions. However in some cases
+% it will not manage to  find a stepsize to make both wolfe-conditions satisfied.
+% Then the H-matrix is reset to the identity matrix. In this way it is a
+% BFGS method if everething works out, but in some cases it is just a
+% gradient descent. We have observed that both with stepSelection true and
+% false the convergence stops at some point depending on the problem. The
+% implementation will therefore quit after 100 iterations of
+% constr_quasi_Newton.m with the best solution found.
 close all
 clear all
 clc
