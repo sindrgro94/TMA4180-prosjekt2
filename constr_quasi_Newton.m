@@ -6,13 +6,13 @@ max_iter = 200;
 dd = constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle);
 %Initialiazing values
 I = eye(n*s);
-H = I;
+H = sparse(I);
 k = 0;
 c1 = 10^-4;
 rho = 1/2;
 cnt = 0;
 while norm(dd) > tol && k<=max_iter
-    if mod(k,10) == 0
+    if mod(k,1) == 0
         H = I;
     end
     alpha = 1;
@@ -24,22 +24,22 @@ while norm(dd) > tol && k<=max_iter
         alpha = rho*alpha;
     end
 %     alpha = find_alpha_constrained(pk, THETA,lambdas,lambdas_constr,L,P,my,angle);
-    if alpha < 10^-100
-        fprintf('Break\n')
-        break;
-    end
     %Updating x
     %Updating H
     sk = alpha*pk;
     pk = reshape(pk,n,s);
     THETA = THETA + alpha*pk;
     yk = (constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle)-dd);
-%      rok = 1/dot(yk,sk);
+     rok = 1/dot(yk,sk);
+     if alpha < 10^-100 || rok > 10^100
+        fprintf('Break\n')
+        break;
+    end
 %     zk = (H*yk);
 %     H = H - (sk*zk' + zk*sk')/dot(yk,sk) + (dot(yk,zk)+rok)*(sk*sk')/(dot(yk,sk)^2);
     
 %      H = (I-1/dot(yk,sk)*sk*yk')*H*(I-1/dot(yk,sk)*yk*sk')+sk*sk'*rok;
-%     H = H - H*(sk*sk')*H/(sk'*H*sk)+yk*yk'/dot(yk,sk);
+% %     H = H - H*(sk*sk')*H/(sk'*H*sk)+yk*yk'/dot(yk,sk);
 %     if ~all(real(eig(H)>=0))
 %         H = I;
 %         cnt = cnt+1
