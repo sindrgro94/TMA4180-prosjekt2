@@ -6,6 +6,7 @@ function plotHandMovement(theta,L,p)
 % p = 2xn matrix that contains all the n points the robot arm reaches.
 % first row is x-value, second is y-value.
 r = sum(L);
+r = r*1.5;
 figure
 xlim([-r,r]);
 ylim([-r,r]); 

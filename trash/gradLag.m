@@ -4,7 +4,7 @@ function grad = gradLag(THETA,lambdas,lambdas_constr,L,P,my,angle)
  grad = zeros(s*n,1);
  cnt = 1;
  x = min(min(abs(THETA)));
- h = x/100000;
+ h = x*10^-9;
  %%Fjerde ordens approksimasjon
  for j = 1:s
      for i = 1:n

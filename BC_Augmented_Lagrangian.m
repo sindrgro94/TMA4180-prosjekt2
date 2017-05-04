@@ -1,24 +1,36 @@
 function THETA = BC_Augmented_Lagrangian(THETA,L,P,angle,max_iter)
 [n,s] = size(THETA);
-lambdas = ones(s,2);
+lambdas = ones(s,2)*0.01;
 THETA = getInitialValues(THETA,L,P,angle);
-lambdas_constr = zeros(size(constr_c(THETA,angle)))*0.01;
-my = 1;
+lambdas_constr = zeros(size(constr_c(THETA,angle)));
+my = 10;
 TOL = 0.01;
 [lambdas,lambdas_constr,tol] = update_lambdas_tol(THETA,lambdas,lambdas_constr,L,P,my, angle);
-k = 0;
+k = 1;
 dd = norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle));
+x(k) = dd;
+y = zeros(s,1);
+y(:,k) = lambdas(:,1);
 while norm(dd) > TOL;
+k = k+1;
     [THETA] = constr_quasi_Newton(THETA,lambdas,lambdas_constr,L,P,my, tol, angle);
-    [lambdas,lambdas_constr,tol] = update_lambdas_tol(THETA,lambdas,lambdas_constr,L,P,my, angle);
-    my = 20;
-    k = k+1;
-    dd = norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle));
+    dd = norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle));   
     x(k) = dd;
-    if isnan(THETA)
+    y(:,k) = lambdas(:,1);
+    if dd <= min(x)
+        best_THETA = THETA;
+    end
+    if (norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle)) < TOL) || sum(sum(isnan(THETA) == 1)) > 0 || k >= 100
+        if k >= 50
+            fprintf('Could not find a better solution than ||gradien|| = %f \n',min(x))
+            THETA = best_THETA;
+        end
         break
     end
-    THETA_old = THETA;
+    [lambdas,lambdas_constr,tol] = update_lambdas_tol(THETA,lambdas,lambdas_constr,L,P,my, angle);
+    if x(k)/x(k-1) > 0.9 && my < 100
+        my = my*1.5;
+    end
 end
 
 end
