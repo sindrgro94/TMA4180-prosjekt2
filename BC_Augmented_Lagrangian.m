@@ -1,10 +1,18 @@
-function THETA = BC_Augmented_Lagrangian(THETA,L,P,angle,max_iter)
+function THETA = BC_Augmented_Lagrangian(THETA,L,P,angle,max_iter,stepSelection)
 [n,s] = size(THETA);
 lambdas = ones(s,2)*0.01;
 THETA = getInitialValues(THETA,L,P,angle);
+if sum([1 1] == size(THETA)) == 2
+    fprintf('At least one of the points are not reachable. Function will terminate.\n');
+    return
+end
 lambdas_constr = zeros(size(constr_c(THETA,angle)));
 my = 10;
-TOL = 0.00001;
+if stepSelection
+    TOL = 0.0005;
+else
+    TOL = 0.15;
+end
 [lambdas,lambdas_constr,tol] = update_lambdas_tol(THETA,lambdas,lambdas_constr,L,P,my, angle);
 k = 1;
 dd = norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle));
@@ -13,7 +21,7 @@ y = zeros(s,1);
 y(:,k) = lambdas(:,1);
 while norm(dd) > TOL;
 k = k+1;
-    [THETA] = constr_quasi_Newton(THETA,lambdas,lambdas_constr,L,P,my, tol, angle);
+    [THETA] = constr_quasi_Newton(THETA,lambdas,lambdas_constr,L,P,my, tol, angle,stepSelection);
     dd = norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle));   
     x(k) = dd;
     y(:,k) = lambdas(:,1);
@@ -21,8 +29,8 @@ k = k+1;
         best_THETA = THETA;
     end
     if (norm(constr_dLag(THETA,lambdas,lambdas_constr,L,P,my,angle)) < TOL) || sum(sum(isnan(THETA) == 1)) > 0 || k >= 100
-        if k >= 50
-            fprintf('Could not find a better solution than ||gradien|| = %f \n',min(x))
+        if k >= 100
+            fprintf('Could not find a better solution than ||gradient|| = %f \n',min(x))
             THETA = best_THETA;
         end
         break
@@ -52,6 +60,8 @@ function THETA = getInitialValues(THETA,L,p,angle)
 [joints,points] = size(THETA);
 TOL = 0.01;
 max_iter = 1000;
+fx = @(theta,L,p) 1/2*norm([sum(L.*cos(cumsum(theta))),...
+    sum(L.*sin(cumsum(theta)))]-p')^2;
 for point = 1:points    
     k = 0;
     beta = 1;
@@ -59,6 +69,10 @@ for point = 1:points
         k = k+1;
         [THETA(:,point)] = quasiNewton(THETA(:,point),L,p(:,point), beta, angle, TOL/10);
         beta = beta/10;
+    end
+    if(fx(THETA(:,point),L,p(:,point))>10^-2)
+        THETA = 0;
+    return
     end
 end
 end
