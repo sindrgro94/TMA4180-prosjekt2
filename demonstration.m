@@ -25,7 +25,7 @@ plotHandMovement(answer,L,P);
 
 %% Task2 Augmented lagrangian for both equality and inequality
 % To make the method terminate and don't use too long time, the tolerance for the 2-norm of the gradient
-% to the lagrangian is set to 0.1 and stepSelection = false meaning we use
+% to the lagrangian is set to 0.1  when stepSelection = false meaning we use
 % only backtracking. When we do this we can not guarantee H to be pos.def so we reset H to be the identity matrix 
 % at each step. Then the method is technically gradient descent.
 % If stepSelection is true we use find_alpha_constrained.m to find stepsizes,

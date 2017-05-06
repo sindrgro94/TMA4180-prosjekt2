@@ -8,8 +8,10 @@ if sum([1 1] == size(THETA)) == 2
 end
 lambdas_constr = zeros(size(constr_c(THETA,angle)));
 my = 10;
-if stepSelection
+if stepSelection && length(P)<5
     TOL = 0.0005;
+elseif stepSelection
+    TOL = 0.0007;
 else
     TOL = 0.1;
 end
