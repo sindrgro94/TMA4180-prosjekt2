@@ -9,7 +9,7 @@ beta = 1;
 lambdas = ones(s,2);
 [~,tol] = update_lambdas_tol(THETA,lambdas,L,P,my);
 k = 0;
-%%Augmentet Lagrangian
+Augmentet Lagrangian
 while norm(bar_dLag(THETA,lambdas,L,P,my,beta, angle)) > TOL && max_iter > k
     k = k+1;
     %THETA = Augmentet_Lagrangian(THETA,L,P,max_iter);
